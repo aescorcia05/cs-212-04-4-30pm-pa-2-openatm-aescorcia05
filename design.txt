@@ -1,0 +1,26 @@
+# Account
+
+Attributes
+
+String name - name of the account holder
+String lastName - last name of the account holder
+String password - password for the account
+double[] last5Transactions - stores the last 5 transactions (positive for deposits and negative for withdrawals)
+double balance - current balance of the account
+
+Methods (all public)
+
+Constructor: Account(String name, String lastName, String password)
+  
+void isOwner(userKey) - determines if userKey matches the stored encrypted key
+void deposit(amount) - updates balance after the user deposits an amount
+void withdraw(amount) - updates balance after the user withdraws an amount
+String[] getStats() - returns the summary of recent account activities as an array: min, max, average, currentBalance
+void displayStats() - prints the account info
+
+
+# Main Methods
+  
+char getTransaction() - returns valid transaction type from user input
+double getNum(prompt) - returns a positive number from user input
+Account[] getAccounts(filename) - stores a series of accounts from a file
