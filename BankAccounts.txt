@@ -1,0 +1,5 @@
+AEBank-AccountsFileIsValid-MaxAccounts:5
+Alejandro Escorcia 1976 100.0 -50.0 -50.0 100.0 -1.0 1.0
+Mauricio Escorcia 1976 10.0 0.0 0.0 0.0 0.0 0.0
+Johana Bell 1976 0.0 0.0 0.0 0.0 0.0 0.0
+maya muñoz -4132 1000.0 1000.0 1.0E23 10000.0 10000.0 -1.0E24
