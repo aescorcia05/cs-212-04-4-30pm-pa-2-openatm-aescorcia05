@@ -12,7 +12,7 @@ public class ATM { //remember to change the name of the class to match the name 
 
     private Account[] accounts;
     private int maxAccounts;
-    private String fileName;
+    private final String fileName;
 
     public ATM() {
         this.fileName = "BankAccounts.txt";
@@ -298,7 +298,6 @@ public class ATM { //remember to change the name of the class to match the name 
         System.out.println();
 
         // Initializing variables
-        String transactionStr;
         char transaction;
         boolean validInput = true;
 
