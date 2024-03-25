@@ -8,22 +8,61 @@ import java.text.DecimalFormat;
 import java.util.Scanner;
 import java.util.Arrays;
 
-public class ATM { //remember to change the name of the class to match the name of the file.
+public class ATM {
 
+    /** Stores accounts in an array */
     private Account[] accounts;
+
+    /** Stores the maximum number of accounts */
     private int maxAccounts;
+
+    /** Stores the fileName (String) to read and write from */
     private final String fileName;
 
+    /**
+     * Constructor for the ATM class.
+     * Initializes the ATM object with a default file name "BankAccounts.txt"
+     * and retrieves account information from the file.
+     */
     public ATM() {
         this.fileName = "BankAccounts.txt";
         this.getAccounts();
     }
 
+    /**
+     * Constructor for the ATM class with a custom file name.
+     *
+     * @param fileName the name of the file containing account information
+     * Initializes the ATM object with the specified file name
+     * and retrieves account information from the file.
+     */
     public ATM(String fileName) {
         this.fileName = fileName;
         this.getAccounts();
     }
 
+    /**
+     * Retrieves account information from the file specified by the 'fileName' attribute.
+     * Reads account details from the file
+     * Initializes an array of Account objects,
+     * Gets the account information for each account.
+     *
+     * The file should have the following headline:
+     *     "AEBank-AccountsFileIsValid-MaxAccounts:"
+     *
+     * ...followed by account details in each subsequent line.
+     *
+     * @throws FileNotFoundException if the specified file is not found or is in the wrong format
+     *
+     * The format of each account line in the file is as follows:
+     * [name] [lastName] [pin] [balance] [transaction1] [transaction2] [transaction3] [transaction4] [transaction5]
+     *
+     * [name] is the first name of the account holder
+     * [lastName] is the last name of the account holder
+     * [pin] is the encrypted personal identification number of the account holder
+     * [balance] is the current balance of the account
+     * [transaction1] through [transaction5] are the last 5 transactions made on the account
+     */
     protected void getAccounts() {
 
         final String HEADLINE = "AEBank-AccountsFileIsValid-MaxAccounts:";
@@ -74,6 +113,29 @@ public class ATM { //remember to change the name of the class to match the name 
 
     }
 
+    /**
+     * Saves account information to the file specified by the 'fileName'.
+     * Writes account details to the file, including a headline indicating the maximum number of accounts,followed by account details in each subsequent line.
+     *
+     * @throws IOException if an I/O error occurs while writing to the file
+     *
+     * The file should have the following headline:
+     *     "AEBank-AccountsFileIsValid-MaxAccounts:"
+     *
+     * ...followed by account details in each subsequent line.
+     *
+     * where:
+     * [maxAccounts] is the maximum number of accounts allowed
+     *
+     * The format of each account line in the file is as follows:
+     * [name] [lastName] [pin] [balance] [transaction1] [transaction2] [transaction3] [transaction4] [transaction5]
+     *
+     * [name] is the first name of the account holder
+     * [lastName] is the last name of the account holder
+     * [pin] is the encrypted personal identification number of the account holder
+     * [balance] is the current balance of the account
+     * [transaction1] through [transaction5] are the last 5 transactions made on the account
+     */
     protected void saveAccounts() {
 
         final String HEADLINE = "AEBank-AccountsFileIsValid-MaxAccounts:";
@@ -111,8 +173,22 @@ public class ATM { //remember to change the name of the class to match the name 
 
     }
 
+    /**
+     * Retrieves the account at the specified index.
+     *
+     * @param i the index of the account to retrieve
+     * @return the Account object at the specified index
+     */
     protected Account accounts(int i) {return accounts[i];}
+
+    /** prints a divisor */
     public static void divisor() {System.out.print("\n------------------------------ $ ------------------------------\n\n");}
+
+    /**
+     * Prompts the user to input an account number and validates the input.
+     *
+     * @return the valid account number input by the user
+     */
     public int getAccountNum() {
 
         Scanner input = new Scanner(System.in);
@@ -145,7 +221,13 @@ public class ATM { //remember to change the name of the class to match the name 
 
     }
 
-    // namesToAccountNum - returns the account number for a given first name and last name (-1 if it does not exist).
+    /**
+     * Returns the account number for a given first name and last name.
+     *
+     * @param userName the first name of the account holder
+     * @param userLastName the last name of the account holder
+     * @return the account number associated with the specified first name and last name (-1 if no account with the given name and last name exists)
+     */
     protected int namesToAccountNum(String userName, String userLastName) {
         for (int i = 0; i < accounts.length; i++) {
             if (accounts[i] != null && accounts[i].name().equals(userName) && accounts[i].lastName().equals(userLastName)) {
@@ -155,6 +237,11 @@ public class ATM { //remember to change the name of the class to match the name 
         return -1;
     }
 
+    /**
+     * Checks if there is space available for a new account.
+     *
+     * @return true if there is space available, false otherwise
+     */
     public boolean hasSpace() {
         for (int i = 0; i < accounts.length; i++) {
             if (accounts[i] == null) {
@@ -164,6 +251,11 @@ public class ATM { //remember to change the name of the class to match the name 
         return false;
     }
 
+    /**
+     * Finds the index of the first available slot for a new account in the 'accounts' array.
+     *
+     * @return the index of the first available slot for a new account (-1 if there are no available slots).
+     */
     public int newAccountNum() {
         int accountNum = -1;
         for (int i = 0; i < accounts.length; i++) {
@@ -174,6 +266,13 @@ public class ATM { //remember to change the name of the class to match the name 
         return accountNum;
     }
 
+    /**
+     * Creates a new account with the specified first name and last name.
+     *
+     * @param userName the first name of the account holder
+     * @param userLastName the last name of the account holder
+     * @return the account number of the newly created account (-1 if no space is available for creating a new account).
+     */
     public int createNewAccount(String userName, String userLastName) {
 
         int accountNum = newAccountNum();
@@ -186,6 +285,11 @@ public class ATM { //remember to change the name of the class to match the name 
 
     }
 
+    /**
+     * Simulates a hacking attempt by:
+     * sorting the account array based on account balances in descending order,
+     * and displaying the account details, including name, last name, and account statistics.
+     */
     protected void hacker() {
 
         Account[] accountsForHacker = Arrays.copyOf(accounts, accounts.length);
@@ -219,6 +323,12 @@ public class ATM { //remember to change the name of the class to match the name 
 
     }
 
+    /**
+     * Displays a menu for the specified account number.
+     * The menu allows the user to perform various transactions and view account information.
+     *
+     * @param accountNum the account number for which the menu is displayed
+     */
     protected void menu(int accountNum) {
 
         DecimalFormat df = new DecimalFormat("0.00");
@@ -279,6 +389,11 @@ public class ATM { //remember to change the name of the class to match the name 
         }
     }
 
+    /**
+     * Prompts the administrator to input a transaction option and validates the input.
+     *
+     * @return the valid transaction option input by the administrator
+     */
     private static char getAdminTransaction() {
 
         Scanner input = new Scanner(System.in);
@@ -333,6 +448,16 @@ public class ATM { //remember to change the name of the class to match the name 
 
     }
 
+    /**
+     * Displays an administrative menu for managing accounts.
+     * Allows the administrator to perform various administrative tasks:
+        * setting balance
+        * changing PIN
+        * updating account names
+        * unblocking accounts
+        * opening the regular menu
+        * deleting accounts
+     */
     protected void adminMenu() {
 
         Scanner input = new Scanner(System.in);
@@ -420,3 +545,4 @@ public class ATM { //remember to change the name of the class to match the name 
         }
     }
 } // end of ATM class
+
