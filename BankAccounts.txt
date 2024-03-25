@@ -1,0 +1,2 @@
+AEBank-AccountsFileIsValid-MaxAccounts:5
+Alejandro Escorcia 1976 100.0 -50.0 -50.0 100.0 -1.0 1.0
