@@ -4,19 +4,48 @@ public class Account {
 
     // Attributes
 
-    // name - name of the account holder
+    /**
+     * The first name of the account holder.
+     */
     private String name;
-    // lastName - last name of the account holder
+
+    /**
+     * The last name of the account holder.
+     */
     private String lastName;
-    // password - password for the account
+
+    /**
+     * The encrypted PIN for the account.
+     */
     private int pin;
-    // last5Transactions - stores the last 5 transactions (positive for deposits and negative for withdrawals)
-    private double[] last5Transactions; // most recent first
-    // balance - current balance of the account
+
+    /**
+     * An array storing the last 5 transactions made on the account.
+     * Positive values represent deposits, while negative values represent withdrawals.
+     * The most recent transaction is stored first in the array.
+     */
+    private double[] last5Transactions;
+
+    /**
+     * The current balance of the account.
+     */
     private double balance;
+
+    /**
+     * True if the account is blocked
+     */
     private boolean blocked;
 
-    //Constructor:
+
+    /**
+     * Constructs an Account object with:
+         * the specified first name and last name
+         * a PIN inputted by the user
+         * zero balance
+     *
+     * @param name the first name of the account holder
+     * @param lastName the last name of the account holder
+     */
     public Account(String name, String lastName) {
 
         this.name = name;
@@ -28,6 +57,15 @@ public class Account {
 
     }
 
+    /**
+     * Constructs an Account object with the specified first name, last name, PIN, balance, and last 5 transactions.
+     *
+     * @param name the first name of the account holder
+     * @param lastName the last name of the account holder
+     * @param pin the personal identification number (PIN) for the account
+     * @param balance the current balance of the account
+     * @param last5Transactions an array storing the last 5 transactions made on the account
+     */
     protected Account(String name, String lastName, int pin, double balance, double[] last5Transactions) {
 
         this.name = name;
@@ -39,7 +77,12 @@ public class Account {
 
     }
 
-    // encryptPassword - encrypts a String
+    /**
+     * Encrypts a PIN using a simple encryption algorithm.
+     *
+     * @param pin the PIN to be encrypted
+     * @return the encrypted PIN value
+     */
     protected static int encryptPassword(int pin) {
         int g = 5;
         int p = 10007;
@@ -55,7 +98,11 @@ public class Account {
 
     }
 
-    // getPin - gets a valid pin from user
+    /**
+     * Prompts the user to input a valid PIN.
+     *
+     * @return the valid PIN input by the user
+     */
     public static int getPin() {
         Scanner input = new Scanner(System.in);
 
@@ -84,7 +131,12 @@ public class Account {
 
     }
 
-    // getNewPassword - gets an encrypted password and stores it
+    /**
+     * Prompts the user to input a new PIN and encrypts it using the encryption algorithm.
+     *
+     * After prompting the user to input a new PIN and confirming it,
+     * the method encrypts the PIN using the encryption algorithm and stores it in the account.
+     */
     protected void getNewPassword() {
 
         int pin1 = 1;
@@ -101,13 +153,22 @@ public class Account {
 
     }
 
-    // isOwner(userKey) - determines if userKey matches the stored encrypted key
+    /**
+     * Determines if the provided user key matches the stored encrypted PIN.
+     *
+     * @param userKey the user key to be checked
+     * @return true if the provided user key matches the stored encrypted PIN and the account is not blocked, false otherwise
+     */
     protected boolean isOwner(int userKey) {
         blocked = blocked || Account.encryptPassword(userKey) != pin;
         return !blocked;
     }
 
-    // void deposit(amount) - updates balance after the user deposits an amount
+    /**
+     * Updates the account balance after the user deposits an amount.
+     *
+     * @param amount the amount to be deposited
+     */
     protected void deposit(double amount) {
         balance  += amount;
         last5Transactions[4] = last5Transactions[3];
@@ -117,7 +178,11 @@ public class Account {
         last5Transactions[0] = amount;
     }
 
-    //void withdraw(amount) - updates balance after the user withdraws an amount
+    /**
+     * Updates the account balance after the user withdraws an amount.
+     *
+     * @param amount the amount to be withdrawn
+     */
     protected void withdraw(double amount) {
         balance -= amount;
         last5Transactions[4] = last5Transactions[3];
@@ -127,7 +192,17 @@ public class Account {
         last5Transactions[0] = -amount;
     }
 
-    // String[] statsToStrings() - returns the summary of recent account activities as an array: min, max, average, currentBalance
+    /**
+     * Returns the summary of recent account activities as an array of strings.
+     *
+     * The array includes:
+         * the minimum transaction amount
+         * maximum transaction amount
+         * average transaction amount
+         * current account balance
+     *
+     * @return an array of strings containing the summary of recent account activities
+     */
     protected String[] statsToStrings() {
         double min = last5Transactions[0];
         double max = last5Transactions[0];
@@ -159,7 +234,15 @@ public class Account {
 
     }
 
-    // displayStats() - prints the account info
+    /**
+     * Prints the account information
+     *
+     * Including:
+         * the minimum transaction amount
+         * maximum transaction amount
+         * average transaction amount
+         * current account balance
+     */
     protected void displayStats() {
         double min = last5Transactions[0];
         double max = last5Transactions[0];
@@ -187,11 +270,20 @@ public class Account {
         System.out.println("Current balance: " + balance);
     }
 
-    // toFile - returns a String with the information of the account to save to a file
+    /**
+     * Returns a string containing the information of the account in a format suitable for saving to a file.
+     *
+     * @return a string with the account information formatted for file storage
+     */
     public String toFile() {
         return name + " " + lastName + " " + pin + " " + balance + " " + last5Transactions[0] + " " + last5Transactions[1] + " " + last5Transactions[2] + " " + last5Transactions[3] + " " + last5Transactions[4];
     }
 
+    /**
+     * Prompts the user to select a transaction option and validates the input.
+     *
+     * @return the selected transaction option
+     */
     public char getTransaction() {
 
         Scanner input = new Scanner(System.in);
@@ -251,6 +343,10 @@ public class Account {
 
     }
 
+    /**
+     * Displays the last 5 transactions made on the account.
+     * Transactions with a value of 0 are skipped.
+     */
     protected void displayLast5Transactions() {
         for (int i = 0; i < 5; i++) {
             if (last5Transactions[i] != 0) {
@@ -259,6 +355,12 @@ public class Account {
         }
     }
 
+    /**
+     * Prompts the user to set a new PIN for the account and validates the input.
+     *
+     * The method ensures that the user inputs a valid PIN and confirms it correctly.
+     * Once the PIN is confirmed, it is encrypted and stored in the account.
+     */
     private void setPin() {
         Scanner input = new Scanner(System.in);
 
@@ -335,13 +437,61 @@ public class Account {
 
     }
 
+    /**
+     * Sets the balance of the account to the specified value.
+     *
+     * @param newBalance the new balance to set for the account
+     */
     protected void setBalance(double newBalance) {balance = newBalance;}
+    /**
+     * Unblocks the account.
+     */
     protected void unblock() {blocked = false;}
 
-    public double balance() {return balance;}
-    public String name() {return name;}
-    public String lastName() {return lastName;}
-    protected int pin() {return pin;}
-    protected double[] last5Transactions() {return last5Transactions;}
+    /**
+     * Retrieves the current balance of the account.
+     *
+     * @return the current balance of the account
+     */
+    protected double balance() {
+        return balance;
+    }
+
+    /**
+     * Retrieves the first name of the account holder.
+     *
+     * @return the first name of the account holder
+     */
+    public String name() {
+        return name;
+    }
+
+    /**
+     * Retrieves the last name of the account holder.
+     *
+     * @return the last name of the account holder
+     */
+    public String lastName() {
+        return lastName;
+    }
+
+    /**
+     * Retrieves the encrypted PIN of the account.
+     *
+     * @return the encrypted PIN of the account
+     */
+    protected int pin() {
+        return pin;
+    }
+
+    /**
+     * Retrieves the array containing the last 5 transactions made on the account.
+     *
+     * @return an array containing the last 5 transactions made on the account
+     */
+    protected double[] last5Transactions() {
+        return last5Transactions;
+    }
+
 
 }

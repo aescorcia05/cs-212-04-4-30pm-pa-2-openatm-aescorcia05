@@ -2,6 +2,12 @@ import java.util.Scanner;
 
 public class Main {
 
+    /**
+     * Prompts the user to input a positive number and validates the input.
+     *
+     * @param prompt the prompt message to display to the user
+     * @return the positive number input by the user
+     */
     public static double getPositiveNum(String prompt) {
 
         Scanner input = new Scanner(System.in);
@@ -31,6 +37,13 @@ public class Main {
         // Returning input
         return num;
     }
+
+    /**
+     * Prompts the user whether they want to create a new account for the specified name.
+     *
+     * @param name the name for which the new account is being created
+     * @return 'Y' if the user wants to create a new account, 'N' otherwise
+     */
     public static char wantNewAccount(String name) {
 
         Scanner input = new Scanner(System.in);
@@ -69,6 +82,10 @@ public class Main {
         return choice;
 
     }
+
+    /**
+     * Prints a headline for the ATM
+     */
     public static void headline() {
         System.out.println("------------------------------ $ ------------------------------");
         System.out.println("                          AE Bank ATM                          ");
@@ -76,6 +93,16 @@ public class Main {
         System.out.println();
     }
 
+    /**
+     * Main method to run the ATM program.
+     *
+     * Prompts the user to enter their first name and last name.
+     * If the user is an admin, it directs them to the admin menu.
+     * If the user wants to quit, the program ends.
+     * Otherwise, it checks if the user has an existing account and proceeds accordingly.
+     * If no account is found and there is available space, it offers to create a new account.
+     * After each interaction, it clears the screen for the next user.
+     */
     public static void main(String[] args) {
 
         for (int i = 0; i < 80; i++) {System.out.println();}
